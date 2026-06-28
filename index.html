@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Habib Benabdeslam · Systems, Automations & AI Workflows</title>
+<meta name="description" content="A field guide to AI systems, automations, and small tools I've designed and shipped: multi-agent pipelines, no-code automations, and bespoke AI workflows." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hanken+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  /* Light "architect's draft" theme: bright paper, ink text, blue accent */
+  --ink:#f5f2ea;          /* page background (bright) */
+  --ink-2:#ece7d9;        /* slightly darker surface panels */
+  --paper:#0e1422;        /* deep ink (rarely used) */
+  --line:rgba(40,70,160,.16);
+  --line-strong:rgba(40,70,160,.34);
+  --blue:#2f56c4;         /* accent */
+  --blue-bright:#1c3da8;  /* stronger accent for emphasis / hover */
+  --blue-deep:#9ec1ff;    /* pale blue for soft fills */
+  --cream:#10172a;        /* primary text (dark) */
+  --muted:#5b6478;        /* secondary text */
+  --muted-2:#8791a6;
+  --slate:#33405c;        /* body copy on light */
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Hanken Grotesk",-apple-system,sans-serif;
+  --mono:"JetBrains Mono",monospace;
+  --maxw:1240px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);
+  color:var(--cream);
+  font-family:var(--sans);
+  font-weight:400;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ---- Blueprint grid + atmosphere ---- */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:54px 54px;
+  mask-image:radial-gradient(ellipse 120% 90% at 50% 0%,#000 35%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 120% 90% at 50% 0%,#000 35%,transparent 78%);
+}
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(900px 500px at 78% -8%,rgba(47,86,196,.12),transparent 60%),
+    radial-gradient(700px 600px at 5% 18%,rgba(47,86,196,.07),transparent 55%);
+}
+.grain{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+/* ---- Type ---- */
+.mono{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue)}
+.eyebrow{display:inline-flex;align-items:center;gap:.6rem;color:var(--blue)}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--blue);opacity:.7}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.02;letter-spacing:-.015em}
+a{color:inherit;text-decoration:none}
+
+/* ---- Nav ---- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 28px;
+  border-bottom:1px solid transparent;
+  transition:.4s ease;
+}
+nav.scrolled{
+  background:rgba(245,242,234,.82);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  padding:13px 28px;
+}
+nav .brand{font-family:var(--mono);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream)}
+nav .brand b{color:var(--blue);font-weight:500}
+nav .links{display:flex;gap:26px}
+nav .links a{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);transition:.25s}
+nav .links a:hover{color:var(--blue-bright)}
+@media(max-width:720px){nav .links{display:none}}
+
+/* ---- Hero ---- */
+header.hero{position:relative;padding:170px 0 90px;z-index:2}
+.hero-meta{display:flex;flex-wrap:wrap;gap:18px 34px;margin-bottom:34px}
+.hero-meta span{display:flex;align-items:center;gap:.5rem}
+.hero-meta .dot{width:6px;height:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 12px var(--blue)}
+.hero h1{
+  font-size:clamp(2.9rem,8.4vw,7.4rem);
+  letter-spacing:-.03em;
+  line-height:.95;
+}
+.hero h1 .it{font-style:italic;font-weight:300;color:var(--blue)}
+.hero .lede{
+  margin-top:34px;max-width:62ch;
+  font-size:clamp(1.05rem,1.9vw,1.4rem);
+  color:var(--slate);font-weight:300;line-height:1.55;
+}
+.hero .lede b{color:var(--cream);font-weight:600}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:42px}
+.btn{
+  font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:14px 22px;border:1px solid var(--line-strong);border-radius:2px;
+  display:inline-flex;align-items:center;gap:.7rem;transition:.3s;color:var(--cream);
+}
+.btn .arr{transition:transform .3s}
+.btn:hover{border-color:var(--blue);color:var(--blue-bright);background:rgba(47,86,196,.06)}
+.btn:hover .arr{transform:translateX(4px)}
+.btn.solid{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn.solid:hover{background:var(--blue-bright)}
+
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:84px;border:1px solid var(--line);background:var(--line)}
+.hero-stats .cell{background:var(--ink);padding:24px 22px}
+.hero-stats .num{font-family:var(--serif);font-size:2.4rem;color:var(--blue);line-height:1}
+.hero-stats .lab{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:10px;display:block}
+@media(max-width:720px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+
+/* ---- Section frame ---- */
+section{position:relative;z-index:2;padding:96px 0}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;margin-bottom:54px;border-bottom:1px solid var(--line);padding-bottom:22px}
+.sec-head h2{font-size:clamp(1.8rem,3.6vw,2.9rem)}
+.sec-head .idx{font-family:var(--mono);font-size:.74rem;letter-spacing:.2em;color:var(--blue);text-transform:uppercase}
+
+/* ---- Work index ---- */
+.work-list{display:flex;flex-direction:column}
+.work-item{
+  display:grid;grid-template-columns:64px 1.4fr 1fr auto;gap:28px;align-items:center;
+  padding:30px 8px;border-top:1px solid var(--line);position:relative;cursor:default;
+  transition:.4s ease;
+}
+.work-item:last-child{border-bottom:1px solid var(--line)}
+.work-item::after{content:"";position:absolute;left:0;bottom:-1px;height:1px;width:0;background:var(--blue);transition:width .5s ease}
+.work-item:hover{background:linear-gradient(90deg,rgba(47,86,196,.05),transparent)}
+.work-item:hover::after{width:100%}
+.work-item .wk-no{font-family:var(--mono);font-size:.8rem;color:var(--blue);opacity:.8}
+.work-item h3{font-size:1.55rem;letter-spacing:-.01em}
+.work-item:hover h3{color:var(--blue-bright)}
+.work-item .wk-desc{color:var(--muted);font-size:.98rem;font-weight:300;line-height:1.5}
+.work-item .wk-tags{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end}
+.tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);border:1px solid var(--line-strong);padding:5px 9px;border-radius:2px;white-space:nowrap}
+@media(max-width:900px){
+  .work-item{grid-template-columns:40px 1fr;gap:8px 16px}
+  .work-item .wk-tags{grid-column:2;justify-content:flex-start;margin-top:10px}
+  .work-item .wk-desc{grid-column:2}
+}
+
+/* ---- Case study ---- */
+.case{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.12));border-radius:4px;overflow:hidden}
+.case + .case{margin-top:34px}
+.case-top{padding:40px 40px 30px;border-bottom:1px solid var(--line)}
+.case-top .eyebrow{margin-bottom:18px}
+.case-top h2{font-size:clamp(2rem,4.2vw,3.4rem);max-width:18ch}
+.case-top h2 .it{font-style:italic;color:var(--blue);font-weight:300}
+.case-top p{margin-top:20px;max-width:66ch;color:var(--slate);font-weight:300;font-size:1.05rem}
+.case-body{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.case-cell{background:var(--ink-2);padding:32px 40px}
+.case-cell h4{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:16px}
+.case-cell ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.case-cell li{padding-left:22px;position:relative;color:var(--slate);font-weight:300;font-size:.98rem}
+.case-cell li::before{content:"›";position:absolute;left:0;color:var(--blue);font-family:var(--mono)}
+@media(max-width:760px){.case-body{grid-template-columns:1fr}.case-top,.case-cell{padding:28px 24px}}
+
+/* ---- Frames (shared by compare / attempts / shots) ---- */
+.frame{position:relative}
+.frame .shot{
+  aspect-ratio:4/3;border:1px solid var(--line-strong);border-radius:3px;overflow:hidden;
+  background:var(--ink-2);position:relative;display:flex;align-items:center;justify-content:center;
+  transition:.4s;
+}
+.frame:hover .shot{border-color:var(--blue);transform:translateY(-3px)}
+.frame .shot img{width:100%;height:100%;object-fit:cover;display:block}
+.frame .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted)}
+.frame .ph svg{opacity:.55}
+.frame .ph span{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase}
+.frame .stamp{
+  position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;
+  background:rgba(245,242,234,.92);border:1px solid var(--line-strong);color:var(--blue);padding:4px 8px;border-radius:2px;
+}
+.frame.final .stamp{background:var(--blue);color:#fff;border-color:var(--blue)}
+.frame .cap{margin-top:14px}
+.frame .cap .t{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cream)}
+.frame .cap .d{font-size:.85rem;color:var(--muted);font-weight:300;margin-top:5px;line-height:1.45}
+.frame.final .cap .t{color:var(--blue-bright)}
+
+/* compare: reference vs result, side by side */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:26px;padding:32px 40px 10px}
+.compare .frame .shot{aspect-ratio:16/10}
+.compare .frame .cap .t{font-size:.72rem}
+
+/* attempts: compact thumbnail row, all visible at a glance */
+.gallery-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:22px 40px 0}
+.gallery-head h4{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+.gallery-head .hint{font-size:.82rem;color:var(--muted);font-weight:300}
+.attempts{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:18px 40px 40px}
+.attempts .cap .t{font-size:.6rem}
+
+@media(max-width:820px){
+  .compare{grid-template-columns:1fr}
+  .attempts{grid-template-columns:repeat(2,1fr)}
+  .compare,.attempts,.gallery-head{padding-left:24px;padding-right:24px}
+}
+
+/* ---- Make.com scenario cards (Case 02) ---- */
+.scenarios{display:flex;flex-direction:column;gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.scenario{background:var(--ink-2);padding:30px 40px}
+.scenario .scn-shot{border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;background:var(--ink);position:relative;transition:.4s}
+.scenario:hover .scn-shot{border-color:var(--blue)}
+.scenario .scn-shot img{width:100%;height:auto;display:block}
+.scenario .scn-shot .ph{display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);padding:60px 0}
+.scenario .scn-shot .ph svg{opacity:.55}
+.scenario .scn-shot .ph span{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase}
+.scenario .scn-shot .stamp{position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;background:var(--blue);color:#fff;border:1px solid var(--blue);padding:4px 8px;border-radius:2px}
+.scn-meta{margin-top:18px;display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:16px}
+.scn-text{max-width:74ch}
+.scn-title{font-family:var(--serif);font-size:1.45rem;color:var(--cream);letter-spacing:-.01em;font-weight:400}
+.scn-meta p{color:var(--slate);font-weight:300;font-size:.98rem;margin-top:8px;line-height:1.5}
+.scn-link{flex:none;font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);border:1px solid var(--line-strong);padding:10px 15px;border-radius:2px;display:inline-flex;gap:.5rem;transition:.3s;white-space:nowrap}
+.scn-link:hover{border-color:var(--blue);background:rgba(47,86,196,.06);color:var(--blue-bright)}
+@media(max-width:760px){.scenario{padding:24px}}
+
+/* ---- Capabilities ---- */
+.caps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.cap-card{background:var(--ink);padding:30px 26px;transition:.35s}
+.cap-card:hover{background:var(--ink-2)}
+.cap-card .n{font-family:var(--mono);font-size:.66rem;color:var(--blue);letter-spacing:.14em}
+.cap-card h3{font-size:1.3rem;margin:14px 0 10px}
+.cap-card p{color:var(--muted);font-weight:300;font-size:.92rem;line-height:1.5}
+@media(max-width:840px){.caps{grid-template-columns:1fr}}
+
+/* ---- Approach strip ---- */
+.principles{display:grid;grid-template-columns:repeat(2,1fr);gap:36px 64px}
+.principle{border-top:1px solid var(--line);padding-top:22px}
+.principle .pn{font-family:var(--serif);font-size:2rem;color:var(--blue)}
+.principle h3{font-size:1.3rem;margin:8px 0 10px}
+.principle p{color:var(--muted);font-weight:300;font-size:.96rem}
+@media(max-width:700px){.principles{grid-template-columns:1fr}}
+
+/* ---- Contact ---- */
+.contact{text-align:center;padding:120px 0 110px}
+.contact .eyebrow{justify-content:center;margin-bottom:24px}
+.contact h2{font-size:clamp(2.4rem,7vw,5.2rem);line-height:1}
+.contact h2 .it{font-style:italic;color:var(--blue);font-weight:300}
+.contact .mail{display:inline-block;margin-top:34px;font-family:var(--mono);font-size:clamp(.9rem,2.4vw,1.3rem);letter-spacing:.08em;color:var(--blue);border-bottom:1px solid var(--line-strong);padding-bottom:6px;transition:.3s}
+.contact .mail:hover{color:var(--blue-bright);border-color:var(--blue)}
+.contact .socials{display:flex;gap:24px;justify-content:center;margin-top:40px}
+.contact .socials a{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:.25s}
+.contact .socials a:hover{color:var(--blue-bright)}
+
+footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:28px 0}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+footer .mono{color:var(--muted)}
+
+/* ---- Reveal animation ---- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.08s}
+.reveal[data-d="2"]{transition-delay:.16s}
+.reveal[data-d="3"]{transition-delay:.24s}
+.reveal[data-d="4"]{transition-delay:.32s}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav id="nav">
+  <a class="brand" href="#top">HB <b>/</b> field guide</a>
+  <div class="links">
+    <a href="#work">Work</a>
+    <a href="#case">Case Studies</a>
+    <a href="#caps">Capabilities</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-meta mono reveal">
+      <span><span class="dot"></span> Taking on new builds</span>
+      <span>Based in Oran, Algeria · Remote</span>
+      <span>Systems · Automation · AI</span>
+    </div>
+    <h1 class="reveal" data-d="1">
+      I design <span class="it">systems</span><br>
+      that do the work.
+    </h1>
+    <p class="lede reveal" data-d="2">
+      I build <b>AI workflows, automations, and small tools</b> that turn slow, messy
+      marketing operations into customer acquisition machines. Multi-agent pipelines,
+      no-code automations, and bespoke AI skills, engineered to run with minimal hand-holding.
+    </p>
+    <div class="hero-cta reveal" data-d="3">
+      <a class="btn solid" href="#work">View the work <span class="arr">→</span></a>
+      <a class="btn" href="#contact">Get in touch <span class="arr">↗</span></a>
+    </div>
+
+    <div class="hero-stats reveal" data-d="4">
+      <div class="cell"><span class="num">20<small style="font-size:1.1rem">min</small></span><span class="lab">Topic → publishable draft</span></div>
+      <div class="cell"><span class="num">25+</span><span class="lab">Bespoke AI skills shipped</span></div>
+      <div class="cell"><span class="num">9</span><span class="lab">Agents in one pipeline</span></div>
+      <div class="cell"><span class="num">3</span><span class="lab">Platforms orchestrated</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ WORK ============ -->
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Selected Work</h2>
+      <span class="idx">01 / Index</span>
+    </div>
+
+    <div class="work-list">
+      <article class="work-item reveal">
+        <span class="wk-no">01</span>
+        <h3>Multi-Agent Content Pipeline</h3>
+        <p class="wk-desc">An assembly line of specialized AI agents that takes a topic to a publishable draft in ~20 minutes. Each stage is gated by an independent verifier, with a final human checkpoint.</p>
+        <div class="wk-tags"><span class="tag">Multi-agent</span><span class="tag">Verification</span><span class="tag">Prompt systems</span></div>
+      </article>
+
+      <article class="work-item reveal">
+        <span class="wk-no">02</span>
+        <h3>Bespoke AI Skills Suite</h3>
+        <p class="wk-desc">25+ purpose-built AI skills and agents for reviewing, editing, planning, and creating long-form content. A reusable toolkit that standardizes quality across a whole team.</p>
+        <div class="wk-tags"><span class="tag">Agent design</span><span class="tag">Workflow</span><span class="tag">Quality systems</span></div>
+      </article>
+
+      <article class="work-item reveal">
+        <span class="wk-no">03</span>
+        <h3>Research &amp; Data Automation</h3>
+        <p class="wk-desc">A no-code automation that assembles research and analytics data on a trigger (metrics, search insights, screenshots), then hands a clean package to the pipeline.</p>
+        <div class="wk-tags"><span class="tag">Make.com</span><span class="tag">No-code</span><span class="tag">Data plumbing</span></div>
+      </article>
+
+      <article class="work-item reveal">
+        <span class="wk-no">04</span>
+        <h3>In-Sheet Research Agents</h3>
+        <p class="wk-desc">AI agents that run live web research directly inside a spreadsheet, turning thousands of rows of raw entities into enriched, structured data without leaving the grid.</p>
+        <div class="wk-tags"><span class="tag">AI agents</span><span class="tag">Enrichment</span><span class="tag">Scale</span></div>
+      </article>
+
+      <article class="work-item reveal">
+        <span class="wk-no">05</span>
+        <h3>Teaching Claude to Design On-Brand</h3>
+        <p class="wk-desc">A design system encoded for an AI: I taught Claude to generate on-brand visual assets from our guidelines. Captured below as a case study, iteration by iteration.</p>
+        <div class="wk-tags"><span class="tag">Design ops</span><span class="tag">Figma</span><span class="tag">Featured ↓</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE STUDIES ============ -->
+<section id="case">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Case Studies</h2>
+      <span class="idx">02 / Deep Dives</span>
+    </div>
+
+    <!-- CASE 01 / BRAND ASSETS -->
+    <div class="case reveal">
+      <div class="case-top">
+        <span class="eyebrow mono">Case 01 · Design Ops · Human-in-the-loop</span>
+        <h2>Teaching Claude to design <span class="it">on-brand</span> assets, from guidelines, not guesswork.</h2>
+        <p>Most teams treat AI design as a slot machine. I treated it as a system. I distilled our brand
+        guidelines into explicit, machine-readable rules: color logic, line weight, composition, layout
+        patterns by asset type, then iterated with the model until it could match the reference. Below:
+        the target on the left, what Claude produced on the right, and the honest trail of attempts underneath.</p>
+      </div>
+
+      <!-- reference vs result, side by side -->
+      <div class="compare">
+        <figure class="frame">
+          <div class="shot">
+            <img src="assets/brand-iterations/reference.png" alt="Reference target" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ph" style="display:none">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+              <span>reference.png</span>
+            </div>
+            <span class="stamp">Reference</span>
+          </div>
+          <figcaption class="cap">
+            <div class="t">The reference I gave it</div>
+            <div class="d">The target style and composition Claude had to match.</div>
+          </figcaption>
+        </figure>
+
+        <figure class="frame final">
+          <div class="shot">
+            <img src="assets/brand-iterations/final.png" alt="Final on-brand result" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ph" style="display:none">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+              <span>final.png</span>
+            </div>
+            <span class="stamp">Result ✓</span>
+          </div>
+          <figcaption class="cap">
+            <div class="t">What Claude produced</div>
+            <div class="d">On-brand and reproducible on demand.</div>
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- the attempts in between -->
+      <div class="gallery-head">
+        <h4>Iteration Log / the attempts in between</h4>
+        <span class="hint">off-brand to on-brand</span>
+      </div>
+      <div class="attempts">
+        <figure class="frame">
+          <div class="shot">
+            <img src="assets/brand-iterations/v01.png" alt="Attempt 01" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ph" style="display:none"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg><span>v01.png</span></div>
+            <span class="stamp">01</span>
+          </div>
+          <figcaption class="cap"><div class="t">First pass. Off-brand</div><div class="d">Right idea, wrong language. Ignored line weight and color.</div></figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="shot">
+            <img src="assets/brand-iterations/v02.png" alt="Attempt 02" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ph" style="display:none"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg><span>v02.png</span></div>
+            <span class="stamp">02</span>
+          </div>
+          <figcaption class="cap"><div class="t">Color corrected</div><div class="d">Palette locked to the system. Composition still cluttered.</div></figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="shot">
+            <img src="assets/brand-iterations/v03.png" alt="Attempt 03" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ph" style="display:none"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg><span>v03.png</span></div>
+            <span class="stamp">03</span>
+          </div>
+          <figcaption class="cap"><div class="t">Layout rules added</div><div class="d">Asset-type patterns in. Lines finally thin and clean.</div></figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="shot">
+            <img src="assets/brand-iterations/v04.png" alt="Attempt 04" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ph" style="display:none"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg><span>v04.png</span></div>
+            <span class="stamp">04</span>
+          </div>
+          <figcaption class="cap"><div class="t">Near miss</div><div class="d">Almost there. Refined spacing and hierarchy in the prompt.</div></figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- CASE 02 / MAKE.COM AUTOMATION -->
+    <div class="case reveal">
+      <div class="case-top">
+        <span class="eyebrow mono">Case 02 · No-code Automation</span>
+        <h2>Make.com scenarios that run the <span class="it">busywork</span>.</h2>
+        <p>I build no-code automations that wire our tools together and handle the repetitive work end to
+        end: turning ideas into validated keywords, sizing up the competition, and keeping the Notion
+        workspace tidy. Three of them below, each a live Make blueprint you can open.</p>
+      </div>
+
+      <div class="scenarios">
+        <article class="scenario">
+          <div class="scn-shot">
+            <img src="assets/make/make-research.png" alt="Content idea to validated keyword list scenario" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ph" style="display:none"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 12h3M14 7l3 3M14 17l3-3"/></svg><span>make-research.png</span></div>
+            <span class="stamp">01</span>
+          </div>
+          <div class="scn-meta">
+            <div class="scn-text">
+              <h3 class="scn-title">Content idea → validated keyword list</h3>
+              <p>Takes a content idea from our Notion workspace and turns it into a keyword list with search volume data, so we can validate and prioritize what to write.</p>
+            </div>
+            <a class="scn-link" href="https://eu2.make.com/public/shared-scenario/kz0dGNtfgLN/research-workflow" target="_blank" rel="noopener">View blueprint ↗</a>
+          </div>
+        </article>
+
+        <article class="scenario">
+          <div class="scn-shot">
+            <img src="assets/make/make-serp-ai-overview.png" alt="SERP and Google AI Overview analysis scenario" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ph" style="display:none"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 12h3M14 7l3 3M14 17l3-3"/></svg><span>make-serp-ai-overview.png</span></div>
+            <span class="stamp">02</span>
+          </div>
+          <div class="scn-meta">
+            <div class="scn-text">
+              <h3 class="scn-title">SERP &amp; Google AI Overview analysis</h3>
+              <p>Analyzes the first page of Google results and the AI Overview for keywords we want to rank for, then writes the analysis straight into Notion to support our SEO research.</p>
+            </div>
+            <a class="scn-link" href="https://eu2.make.com/public/shared-scenario/fXBU9GzIR2I/serp-ai-overview-analysis" target="_blank" rel="noopener">View blueprint ↗</a>
+          </div>
+        </article>
+
+        <article class="scenario">
+          <div class="scn-shot">
+            <img src="assets/make/make-property-updater.png" alt="One-click Notion property sync scenario" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ph" style="display:none"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 12h3M14 7l3 3M14 17l3-3"/></svg><span>make-property-updater.png</span></div>
+            <span class="stamp">03</span>
+          </div>
+          <div class="scn-meta">
+            <div class="scn-text">
+              <h3 class="scn-title">One-click Notion property sync</h3>
+              <p>Copies every database property from one Notion page up to its parent page in a single click, removing a tedious manual housekeeping step.</p>
+            </div>
+            <a class="scn-link" href="https://eu2.make.com/public/shared-scenario/9yknQvH8dhC/updating-properties" target="_blank" rel="noopener">View blueprint ↗</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAPABILITIES ============ -->
+<section id="caps">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>How I Work</h2>
+      <span class="idx">03 / Capabilities</span>
+    </div>
+
+    <div class="caps reveal">
+      <div class="cap-card"><span class="n">C-01</span><h3>AI Workflow Architecture</h3><p>Designing multi-agent systems with clear stage boundaries, checklists, and independent verifiers, so output is reliable, not lucky.</p></div>
+      <div class="cap-card"><span class="n">C-02</span><h3>Prompt &amp; Skill Engineering</h3><p>Turning fuzzy human judgment into explicit, testable instructions. Reusable skills that hold quality steady across people and runs.</p></div>
+      <div class="cap-card"><span class="n">C-03</span><h3>No-Code Automation</h3><p>Make.com scenarios that pull, transform, and route data on triggers, gluing tools together into hands-off pipelines.</p></div>
+      <div class="cap-card"><span class="n">C-04</span><h3>Tooling &amp; APIs</h3><p>Small, sharp utilities and APIs that solve one job well: batch processors and data resolvers built for scale.</p></div>
+      <div class="cap-card"><span class="n">C-05</span><h3>Knowledge Architecture</h3><p>Structuring information systems in Notion that teams and agents can both navigate. The backbone for everything above.</p></div>
+      <div class="cap-card"><span class="n">C-06</span><h3>Design Ops with AI</h3><p>Encoding brand and design rules into systems an AI can execute, for consistent visual output without a designer in every loop.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ APPROACH ============ -->
+<section id="approach">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Operating Principles</h2>
+      <span class="idx">04 / Approach</span>
+    </div>
+    <div class="principles">
+      <div class="principle reveal"><div class="pn">i.</div><h3>Systems over heroics</h3><p>A process that runs without me beats a brilliant one-off. I build for the second hundred outputs, not the first.</p></div>
+      <div class="principle reveal" data-d="1"><div class="pn">ii.</div><h3>Verify, don't hope</h3><p>Every stage gets an independent check. Trust comes from gates and rubrics, not from the model having a good day.</p></div>
+      <div class="principle reveal" data-d="2"><div class="pn">iii.</div><h3>Human at the gate</h3><p>Automation does the volume; a human makes the final call. The interesting work is designing where that line sits.</p></div>
+      <div class="principle reveal" data-d="3"><div class="pn">iv.</div><h3>Ship, then sharpen</h3><p>Get a working prototype in front of reality fast, then improve it against real failures instead of imagined ones.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <span class="eyebrow mono reveal">Open to interesting problems</span>
+    <h2 class="reveal" data-d="1">Let's build the<br><span class="it">machine</span> for it.</h2>
+    <a class="mail reveal" data-d="2" href="mailto:habib@benabdeslam.com">habib@benabdeslam.com</a>
+    <div class="socials reveal" data-d="3">
+      <a href="https://github.com/b1b1h-m1k3r" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/benabdeslam" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="mono">© <span id="yr"></span> Habib Benabdeslam</span>
+    <span class="mono">Built as a system · Field guide v1</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>40)},{passive:true});
+
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

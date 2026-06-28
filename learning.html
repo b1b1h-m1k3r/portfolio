@@ -85,6 +85,16 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:26px
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 footer .mono{color:var(--muted)}
 
+.closing{text-align:center;padding:96px 0 80px;border-top:1px solid var(--line)}
+.closing .eyebrow{justify-content:center;margin-bottom:22px}
+.closing h2{font-size:clamp(2rem,5vw,3.5rem);max-width:17ch;margin:0 auto;line-height:1.04}
+.closing h2 .it{font-style:italic;color:var(--blue);font-weight:300}
+.closing p{max-width:60ch;margin:24px auto 0;color:var(--slate);font-weight:300;font-size:1.08rem;line-height:1.6}
+.closing .cta{display:flex;gap:14px;justify-content:center;margin-top:36px;flex-wrap:wrap}
+.closing .btn{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 22px;border:1px solid var(--line-strong);border-radius:2px;transition:.3s;color:var(--cream)}
+.closing .btn:hover{border-color:var(--blue);color:var(--blue-bright);background:rgba(47,86,196,.05)}
+.closing .btn.solid{background:var(--blue);color:#fff;border-color:var(--blue)}
+.closing .btn.solid:hover{background:var(--blue-bright)}
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
@@ -99,19 +109,19 @@ footer .mono{color:var(--muted)}
 
 <header class="hero">
   <div class="wrap">
-    <span class="eyebrow mono reveal">Provenance · Entirely self-taught</span>
-    <h1 class="reveal">From zero to <span class="it">systems</span>,<br>and the receipts for it.</h1>
+    <span class="eyebrow mono reveal">How I got here</span>
+    <h1 class="reveal">From zero to <span class="it">systems</span>,<br>and how you could too.</h1>
     <p class="lede reveal">
-      In <b>2022</b> I had not yet worked on a computer. I ran a small local business built entirely on
-      <b>one-to-one, face-to-face sales</b>. Four years later I design multi-agent AI systems, automations,
-      and internal tools. I taught myself all of it. This page is the paper trail: every skill below is
-      traced to the <b>primary, authoritative sources</b> I learned it from, the official documentation and
-      guides published by the companies that build these tools. No second-hand blogs, no video channels.
+      Four years ago I had never touched a computer. I ran a small local business on
+      <b>one-to-one, face-to-face sales</b>. Then I heard about AI, and something clicked. What follows is
+      the honest map of how I taught myself: the order it actually happened in, and the exact sources I
+      leaned on along the way. They are all <b>free and public</b>. If you are starting where I started,
+      the same doors are open to you.
     </p>
     <div class="hero-stats reveal">
-      <div class="cell"><span class="num">2022 → 2026</span><span class="lab">From no computer to shipping systems</span></div>
-      <div class="cell"><span class="num">100% self-taught</span><span class="lab">No bootcamp, no team</span></div>
-      <div class="cell"><span class="num">Primary sources only</span><span class="lab">Official docs &amp; vendor guides</span></div>
+      <div class="cell"><span class="num">2022 → 2026</span><span class="lab">From no computer to building systems</span></div>
+      <div class="cell"><span class="num">Self-taught</span><span class="lab">One step at a time, no shortcuts</span></div>
+      <div class="cell"><span class="num">All public</span><span class="lab">Every source below is free to learn from</span></div>
     </div>
   </div>
 </header>
@@ -128,21 +138,18 @@ footer .mono{color:var(--muted)}
       </div>
       <div class="tl-item reveal">
         <div class="tl-year">2023</div>
-        <span class="todo">Bitte mit deinem echten Schritt ersetzen</span>
-        <h3>First steps online</h3>
-        <p>[Dein erster konkreter Schritt, z. B. erster Computer, erste Selbstrecherche, erstes Tool. Für Behörden wahrheitsgenau ausfüllen.]</p>
+        <h3>The spark</h3>
+        <p>I heard about AI for the first time and was immediately hooked. I knew I had to start. The same year I launched an HR-marketing agency, my first real reason to get on a computer every day.</p>
       </div>
       <div class="tl-item reveal">
         <div class="tl-year">2024</div>
-        <span class="todo">Bitte mit deinem echten Schritt ersetzen</span>
-        <h3>Building skills</h3>
-        <p>[Dein Meilenstein 2024, z. B. erste Automationen, erste KI-Workflows, erstes echtes Projekt.]</p>
+        <h3>First real tools</h3>
+        <p>I started working in Notion and Make.com and using GPT day to day, running the agency on them. This is where automation and AI stopped being ideas and became how I actually worked.</p>
       </div>
       <div class="tl-item reveal">
         <div class="tl-year">2025</div>
-        <span class="todo">Bitte mit deinem echten Schritt ersetzen</span>
-        <h3>From tools to systems</h3>
-        <p>[Dein Meilenstein 2025, z. B. erste mehrstufige Pipeline, erste Kundenarbeit, Notion-Architektur.]</p>
+        <h3>All in on systems</h3>
+        <p>I left the agency behind and specialized in marketing systems. This is where I started taking agent architectures seriously and went deep, designing the multi-stage, verified pipelines I build today.</p>
       </div>
       <div class="tl-item now reveal">
         <div class="tl-year">2026 · today</div>
@@ -159,10 +166,10 @@ footer .mono{color:var(--muted)}
     <div class="sec-head reveal"><h2>Where I learned each skill</h2><span class="idx">02 / Primary sources</span></div>
 
     <div class="note reveal">
-      <b>Why only these sources.</b> Every reference here is first-party: the official documentation,
-      engineering guides, and learning paths published by the organizations that actually build these
-      systems, OpenAI, Anthropic, Google Cloud, Microsoft, Make.com, and Notion. I learn from the source,
-      then build and verify against it. <b>Confirm each link reflects a source you genuinely used before sharing this page.</b>
+      Almost everything I know I pulled straight from the source: the official documentation and engineering
+      guides written by the teams who actually build these tools. Here is the real reading list, mapped to
+      what I built with each one. It is all free, so if you want to learn this too, this is exactly where I
+      would point you.
     </div>
 
     <div class="groups reveal">
@@ -271,6 +278,18 @@ footer .mono{color:var(--muted)}
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <span class="eyebrow mono reveal">The takeaway</span>
+    <h2 class="reveal">With these tools, anyone can build <span class="it">big things</span> now.</h2>
+    <p class="reveal">I am proof you do not need a degree, a bootcamp, or a team to build something real, just curiosity and the patience to read the source. Everything I learned from is right above, and it is free. If you are starting out, start there. And if you would rather build something together, I am one message away.</p>
+    <div class="cta reveal">
+      <a class="btn solid" href="index.html#contact">Get in touch</a>
+      <a class="btn" href="index.html">See the work</a>
     </div>
   </div>
 </section>

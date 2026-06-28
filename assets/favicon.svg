@@ -1,67 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs>
-    <clipPath id="disc"><circle cx="32" cy="32" r="31"/></clipPath>
-
-    <linearGradient id="greenG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0a9a4e"/>
-      <stop offset="1" stop-color="#004f28"/>
-    </linearGradient>
-    <linearGradient id="whiteG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#e7ebe7"/>
-    </linearGradient>
-    <linearGradient id="redG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ec3357"/>
-      <stop offset="1" stop-color="#b40028"/>
-    </linearGradient>
-    <linearGradient id="rimG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ffffff" stop-opacity="0.85"/>
-      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.1"/>
-      <stop offset="1" stop-color="#000000" stop-opacity="0.4"/>
-    </linearGradient>
-    <radialGradient id="gloss" cx="0.5" cy="0.28" r="0.72">
-      <stop offset="0" stop-color="#ffffff" stop-opacity="0.55"/>
-      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.08"/>
-      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="vignette" cx="0.5" cy="0.52" r="0.55">
-      <stop offset="0.68" stop-color="#000000" stop-opacity="0"/>
-      <stop offset="1" stop-color="#002314" stop-opacity="0.38"/>
-    </radialGradient>
-
-    <mask id="crescent">
-      <rect width="64" height="64" fill="black"/>
-      <circle cx="32" cy="32" r="13.5" fill="white"/>
-      <circle cx="36.5" cy="32" r="11" fill="black"/>
-    </mask>
-    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="1"/>
-    </filter>
-  </defs>
-
-  <g clip-path="url(#disc)">
-    <!-- flag halves with subtle depth -->
-    <rect x="0" y="0" width="32" height="64" fill="url(#greenG)"/>
-    <rect x="32" y="0" width="32" height="64" fill="url(#whiteG)"/>
-
-    <!-- warm glow behind the emblem -->
-    <g filter="url(#soft)" opacity="0.55">
-      <rect width="64" height="64" fill="#ff3f63" mask="url(#crescent)"/>
-      <path fill="#ff3f63" d="M40.5,24.8 L42.2,29.6 L47.3,29.7 L43.2,32.8 L44.7,37.6 L40.5,34.7 L36.3,37.6 L37.8,32.8 L33.7,29.7 L38.8,29.6 Z"/>
-    </g>
-
-    <!-- crisp crescent + star -->
-    <rect width="64" height="64" fill="url(#redG)" mask="url(#crescent)"/>
-    <path fill="url(#redG)" d="M40.5,24.8 L42.2,29.6 L47.3,29.7 L43.2,32.8 L44.7,37.6 L40.5,34.7 L36.3,37.6 L37.8,32.8 L33.7,29.7 L38.8,29.6 Z"/>
-
-    <!-- glass sheen + depth -->
-    <rect width="64" height="64" fill="url(#gloss)"/>
-    <rect width="64" height="64" fill="url(#vignette)"/>
-    <!-- a thin specular streak across the top -->
-    <ellipse cx="30" cy="15" rx="22" ry="7" fill="#ffffff" opacity="0.18"/>
-  </g>
-
-  <!-- beveled rim -->
-  <circle cx="32" cy="32" r="31" fill="none" stroke="url(#rimG)" stroke-width="1.6"/>
-  <circle cx="32" cy="32" r="31.5" fill="none" stroke="#000000" stroke-opacity="0.16" stroke-width="1"/>
+  <!-- System constellation: blueprint orbit (crescent), star node, green nodes -->
+  <rect x="2" y="2" width="60" height="60" rx="15" fill="#f4f1e8" stroke="#006233" stroke-opacity="0.3" stroke-width="1.2"/>
+  <!-- orbit arc (crescent reinterpreted) -->
+  <path d="M44.8,30.4 A15 15 0 1 1 32.6,18.2" fill="none" stroke="#006233" stroke-width="2.6" stroke-linecap="round"/>
+  <!-- connections -->
+  <line x1="38" y1="26" x2="18" y2="46" stroke="#006233" stroke-width="1.8"/>
+  <line x1="38" y1="26" x2="45" y2="45" stroke="#006233" stroke-width="1.8"/>
+  <line x1="38" y1="26" x2="19" y2="22" stroke="#006233" stroke-width="1.8"/>
+  <!-- nodes -->
+  <circle cx="18" cy="46" r="3" fill="#006233"/>
+  <circle cx="45" cy="45" r="3" fill="#006233"/>
+  <circle cx="19" cy="22" r="3" fill="#006233"/>
+  <!-- the star node (Algerian red star) -->
+  <path fill="#d21034" d="M38,19.5 L39.5,24.1 L44.3,24.1 L40.4,27 L41.9,31.6 L38,28.7 L34.1,31.6 L35.6,27 L31.7,24.1 L36.5,24.1 Z"/>
 </svg>

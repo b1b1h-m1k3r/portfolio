@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>How I Learned This · Habib Benabdeslam</title>
+<meta name="description" content="A self-taught path from zero to building AI systems, traced to the primary, authoritative sources behind every skill." />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="apple-touch-icon" href="assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hanken+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#f5f2ea; --ink-2:#ece7d9; --line:rgba(40,70,160,.16); --line-strong:rgba(40,70,160,.34);
+  --blue:#2f56c4; --blue-bright:#1c3da8; --cream:#10172a; --muted:#5b6478; --slate:#33405c;
+  --serif:"Fraunces",Georgia,serif; --sans:"Hanken Grotesk",-apple-system,sans-serif; --mono:"JetBrains Mono",monospace; --maxw:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:54px 54px;mask-image:radial-gradient(ellipse 120% 90% at 50% 0%,#000 35%,transparent 78%);-webkit-mask-image:radial-gradient(ellipse 120% 90% at 50% 0%,#000 35%,transparent 78%)}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(900px 500px at 80% -10%,rgba(47,86,196,.1),transparent 60%)}
+.wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue)}
+.eyebrow{display:inline-flex;align-items:center;gap:.6rem;color:var(--blue)}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--blue);opacity:.7}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.03;letter-spacing:-.015em}
+a{color:inherit;text-decoration:none}
+
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:15px 28px;background:rgba(245,242,234,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .brand{font-family:var(--mono);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+nav .brand b{color:var(--blue);font-weight:500}
+nav .back{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:.25s}
+nav .back:hover{color:var(--blue-bright)}
+
+header.hero{padding:90px 0 60px}
+.hero h1{font-size:clamp(2.6rem,6.6vw,5.4rem);letter-spacing:-.03em;line-height:.97;margin-top:26px}
+.hero h1 .it{font-style:italic;font-weight:300;color:var(--blue)}
+.hero .lede{margin-top:30px;max-width:64ch;font-size:clamp(1.05rem,1.8vw,1.32rem);color:var(--slate);font-weight:300;line-height:1.55}
+.hero .lede b{color:var(--cream);font-weight:600}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:54px;border:1px solid var(--line);background:var(--line)}
+.hero-stats .cell{background:var(--ink);padding:22px 20px}
+.hero-stats .num{font-family:var(--serif);font-size:1.7rem;color:var(--blue);line-height:1.05}
+.hero-stats .lab{font-family:var(--mono);font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:9px;display:block}
+@media(max-width:640px){.hero-stats{grid-template-columns:1fr}}
+
+section{position:relative;z-index:2;padding:70px 0}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;margin-bottom:42px;border-bottom:1px solid var(--line);padding-bottom:20px}
+.sec-head h2{font-size:clamp(1.7rem,3.4vw,2.6rem)}
+.sec-head .idx{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;color:var(--blue);text-transform:uppercase}
+
+/* timeline */
+.tl{position:relative;padding-left:34px}
+.tl::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--line-strong)}
+.tl-item{position:relative;padding:0 0 30px}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::before{content:"";position:absolute;left:-30px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--ink);border:2px solid var(--blue)}
+.tl-item.now::before{background:var(--blue)}
+.tl-year{font-family:var(--mono);font-size:.8rem;letter-spacing:.12em;color:var(--blue);font-weight:600}
+.tl-item h3{font-size:1.3rem;margin:5px 0 6px}
+.tl-item p{color:var(--slate);font-weight:300;font-size:1rem;max-width:60ch}
+.todo{display:inline-block;font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:#9a6b00;background:#f6edd6;border:1px solid #e3c879;border-radius:3px;padding:3px 7px;margin-bottom:6px}
+
+/* source groups */
+.note{border:1px solid var(--line);background:var(--ink-2);border-radius:6px;padding:20px 24px;margin-bottom:40px;color:var(--slate);font-weight:300;font-size:.98rem;max-width:74ch}
+.note b{color:var(--cream);font-weight:600}
+.groups{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.group{background:var(--ink);padding:26px 28px}
+.group .g-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.group h3{font-size:1.35rem}
+.group .g-tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);border:1px solid var(--line-strong);padding:4px 8px;border-radius:3px}
+.srcs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:760px){.srcs{grid-template-columns:1fr}}
+.src{display:flex;flex-direction:column;gap:3px;border:1px solid var(--line);border-radius:4px;padding:13px 15px;transition:.25s;background:var(--ink)}
+.src:hover{border-color:var(--blue);background:rgba(47,86,196,.04)}
+.src .s-name{font-size:.97rem;color:var(--cream);font-weight:500;line-height:1.35}
+.src:hover .s-name{color:var(--blue-bright)}
+.src .s-host{font-family:var(--mono);font-size:.68rem;letter-spacing:.04em;color:var(--muted)}
+.src .s-host::after{content:" ↗";opacity:.6}
+
+footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:26px 0;margin-top:30px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+footer .mono{color:var(--muted)}
+
+.closing{text-align:center;padding:96px 0 80px;border-top:1px solid var(--line)}
+.closing .eyebrow{justify-content:center;margin-bottom:22px}
+.closing h2{font-size:clamp(2rem,5vw,3.5rem);max-width:17ch;margin:0 auto;line-height:1.04}
+.closing h2 .it{font-style:italic;color:var(--blue);font-weight:300}
+.closing p{max-width:60ch;margin:24px auto 0;color:var(--slate);font-weight:300;font-size:1.08rem;line-height:1.6}
+.closing .cta{display:flex;gap:14px;justify-content:center;margin-top:36px;flex-wrap:wrap}
+.closing .btn{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 22px;border:1px solid var(--line-strong);border-radius:2px;transition:.3s;color:var(--cream)}
+.closing .btn:hover{border-color:var(--blue);color:var(--blue-bright);background:rgba(47,86,196,.05)}
+.closing .btn.solid{background:var(--blue);color:#fff;border-color:var(--blue)}
+.closing .btn.solid:hover{background:var(--blue-bright)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="index.html">HB <b>/</b> field guide</a>
+  <a class="back" href="index.html">← Back to portfolio</a>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow mono reveal">How I got here</span>
+    <h1 class="reveal">From zero to <span class="it">systems</span>,<br>and how you could too.</h1>
+    <p class="lede reveal">
+      Four years ago I had never touched a computer. I ran a small local business on
+      <b>one-to-one, face-to-face sales</b>. Then I heard about AI, and something clicked. What follows is
+      the honest map of how I taught myself: the order it actually happened in, and the exact sources I
+      leaned on along the way. They are all <b>free and public</b>. If you are starting where I started,
+      the same doors are open to you.
+    </p>
+    <div class="hero-stats reveal">
+      <div class="cell"><span class="num">2022 → 2026</span><span class="lab">From no computer to building systems</span></div>
+      <div class="cell"><span class="num">Self-taught</span><span class="lab">One step at a time, no shortcuts</span></div>
+      <div class="cell"><span class="num">All public</span><span class="lab">Every source below is free to learn from</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- TIMELINE -->
+<section id="path">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>The path</h2><span class="idx">01 / Where I started</span></div>
+    <div class="tl">
+      <div class="tl-item reveal">
+        <div class="tl-year">2022</div>
+        <h3>The starting point</h3>
+        <p>A local business run entirely on one-to-one, in-person sales. No computer, no code, no online presence. Everything was conversation and handshake.</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-year">2023</div>
+        <h3>The spark</h3>
+        <p>I heard about AI for the first time and was immediately hooked. I knew I had to start. The same year I launched an HR-marketing agency, my first real reason to get on a computer every day.</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-year">2024</div>
+        <h3>First real tools</h3>
+        <p>I started working in Notion and Make.com and using GPT day to day, running the agency on them. This is where automation and AI stopped being ideas and became how I actually worked.</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-year">2025</div>
+        <h3>All in on systems</h3>
+        <p>I left the agency behind and specialized in marketing systems. This is where I started taking agent architectures seriously and went deep, designing the multi-stage, verified pipelines I build today.</p>
+      </div>
+      <div class="tl-item now reveal">
+        <div class="tl-year">2026 · today</div>
+        <h3>Designing and shipping systems</h3>
+        <p>Multi-agent AI pipelines with verification gates, no-code automations, bespoke AI skills, and the design-ops work documented in the portfolio, built to run with minimal hand-holding.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section id="sources">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Where I learned each skill</h2><span class="idx">02 / Primary sources</span></div>
+
+    <div class="note reveal">
+      Almost everything I know I pulled straight from the source: the official documentation and engineering
+      guides written by the teams who actually build these tools. Here is the real reading list, mapped to
+      what I built with each one. It is all free, so if you want to learn this too, this is exactly where I
+      would point you.
+    </div>
+
+    <div class="groups reveal">
+
+      <div class="group">
+        <div class="g-top"><h3>Multi-Agent Content Pipeline</h3><span class="g-tag">Verification gates · human checkpoint</span></div>
+        <div class="srcs">
+          <a class="src" target="_blank" rel="noopener" href="https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/"><span class="s-name">OpenAI:&#32;A Practical Guide to Building AI Agents</span><span class="s-host">openai.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://docs.cloud.google.com/architecture/multiagent-ai-system"><span class="s-name">Google Cloud:&#32;Multi-Agent AI System Reference Architecture</span><span class="s-host">cloud.google.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"><span class="s-name">Anthropic:&#32;Claude Prompting Best Practices</span><span class="s-host">platform.claude.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/building-effective-agents"><span class="s-name">Anthropic:&#32;Building Effective Agents</span><span class="s-host">anthropic.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/multi-agent-research-system"><span class="s-name">Anthropic:&#32;Building a Multi-Agent Research System</span><span class="s-host">anthropic.com</span></a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="g-top"><h3>Bespoke AI Skills Suite</h3><span class="g-tag">Reviewing · editing · planning · long-form</span></div>
+        <div class="srcs">
+          <a class="src" target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/get-started"><span class="s-name">Anthropic:&#32;Prompt Engineering &amp; Developer Docs</span><span class="s-host">platform.claude.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"><span class="s-name">Anthropic:&#32;Effective Context Engineering for AI Agents</span><span class="s-host">anthropic.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://platform.openai.com/docs/guides/prompt-engineering"><span class="s-name">OpenAI:&#32;Prompt Engineering Guide</span><span class="s-host">platform.openai.com</span></a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="g-top"><h3>Research &amp; Data Automation</h3><span class="g-tag">Make.com scenarios</span></div>
+        <div class="srcs">
+          <a class="src" target="_blank" rel="noopener" href="https://help.make.com"><span class="s-name">Make:&#32;Official Help Center &amp; Documentation</span><span class="s-host">help.make.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://academy.make.com"><span class="s-name">Make Academy:&#32;Self-paced Learning Paths</span><span class="s-host">academy.make.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://www.make.com/en/how-to-guides"><span class="s-name">Make:&#32;How-to Guides (incl. AI workflows)</span><span class="s-host">make.com</span></a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="g-top"><h3>In-Sheet Research Agents</h3><span class="g-tag">Live web research in spreadsheets</span></div>
+        <div class="srcs">
+          <a class="src" target="_blank" rel="noopener" href="https://support.microsoft.com/en-us/copilot-excel"><span class="s-name">Microsoft:&#32;Copilot in Excel (official help)</span><span class="s-host">support.microsoft.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://support.google.com/docs/answer/14356410"><span class="s-name">Google:&#32;Gemini in Google Sheets (Workspace help)</span><span class="s-host">support.google.com</span></a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="g-top"><h3>Teaching Claude to Design On-Brand</h3><span class="g-tag">Design systems encoded for AI</span></div>
+        <div class="srcs">
+          <a class="src" target="_blank" rel="noopener" href="https://www.anthropic.com/news/claude-design-anthropic-labs"><span class="s-name">Anthropic:&#32;Claude for Design (Anthropic Labs)</span><span class="s-host">anthropic.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"><span class="s-name">Anthropic:&#32;Prompt Engineering (design &amp; consistency)</span><span class="s-host">platform.claude.com</span></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES MAPPING -->
+<section id="capabilities">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Capabilities, mapped to sources</h2><span class="idx">03 / How it adds up</span></div>
+    <div class="groups reveal">
+
+      <div class="group">
+        <div class="g-top"><h3>AI Workflow Architecture</h3><span class="g-tag">Stage boundaries · verifiers</span></div>
+        <div class="srcs">
+          <a class="src" target="_blank" rel="noopener" href="https://docs.cloud.google.com/architecture/multiagent-ai-system"><span class="s-name">Google Cloud:&#32;Multi-Agent Architecture</span><span class="s-host">cloud.google.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/"><span class="s-name">OpenAI:&#32;Building AI Agents</span><span class="s-host">openai.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/building-effective-agents"><span class="s-name">Anthropic:&#32;Building Effective Agents</span><span class="s-host">anthropic.com</span></a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="g-top"><h3>Prompt &amp; Skill Engineering</h3><span class="g-tag">Structured output · reusable skills</span></div>
+        <div class="srcs">
+          <a class="src" target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"><span class="s-name">Anthropic:&#32;Claude Prompting Best Practices</span><span class="s-host">platform.claude.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://cloud.google.com/discover/what-is-prompt-engineering"><span class="s-name">Google Cloud:&#32;What Is Prompt Engineering</span><span class="s-host">cloud.google.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://platform.openai.com/docs/guides/prompt-engineering"><span class="s-name">OpenAI:&#32;Prompt Engineering Guide</span><span class="s-host">platform.openai.com</span></a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="g-top"><h3>No-Code Automation</h3><span class="g-tag">Triggers · routing · data</span></div>
+        <div class="srcs">
+          <a class="src" target="_blank" rel="noopener" href="https://help.make.com"><span class="s-name">Make:&#32;Help Center &amp; Documentation</span><span class="s-host">help.make.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://academy.make.com"><span class="s-name">Make Academy:&#32;Learning Paths</span><span class="s-host">academy.make.com</span></a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="g-top"><h3>Tooling &amp; APIs</h3><span class="g-tag">Batch · integrations</span></div>
+        <div class="srcs">
+          <a class="src" target="_blank" rel="noopener" href="https://developers.make.com"><span class="s-name">Make:&#32;Developers Hub</span><span class="s-host">developers.make.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/api/overview"><span class="s-name">Anthropic:&#32;API &amp; Tools Documentation</span><span class="s-host">platform.claude.com</span></a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="g-top"><h3>Knowledge Architecture</h3><span class="g-tag">Notion</span></div>
+        <div class="srcs">
+          <a class="src" target="_blank" rel="noopener" href="https://www.notion.com/templates/category/knowledge-base"><span class="s-name">Notion:&#32;Knowledge Base Templates &amp; Guides</span><span class="s-host">notion.com</span></a>
+          <a class="src" target="_blank" rel="noopener" href="https://www.notion.com/help"><span class="s-name">Notion:&#32;Help &amp; Automation Resources</span><span class="s-host">notion.com</span></a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="g-top"><h3>Design Ops with AI</h3><span class="g-tag">Brand systems for AI</span></div>
+        <div class="srcs">
+          <a class="src" target="_blank" rel="noopener" href="https://www.anthropic.com/news/claude-design-anthropic-labs"><span class="s-name">Anthropic:&#32;Claude Design &amp; Brand Resources</span><span class="s-host">anthropic.com</span></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <span class="eyebrow mono reveal">The takeaway</span>
+    <h2 class="reveal">With these tools, anyone can build <span class="it">big things</span> now.</h2>
+    <p class="reveal">I am proof you do not need a degree, a bootcamp, or a team to build something real, just curiosity and the patience to read the source. Everything I learned from is right above, and it is free. If you are starting out, start there. And if you would rather build something together, I am one message away.</p>
+    <div class="cta reveal">
+      <a class="btn solid" href="index.html#contact">Get in touch</a>
+      <a class="btn" href="index.html">See the work</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="mono">© <span id="yr"></span> Habib Benabdeslam</span>
+    <span class="mono"><a href="index.html" style="color:var(--blue)">← Back to portfolio</a></span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent=new Date().getFullYear();
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

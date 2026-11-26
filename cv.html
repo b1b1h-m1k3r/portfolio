@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="canonical" href="https://benabdeslam.com/cv" />
+<title>CV · Habib Benabdeslam</title>
+<meta name="description" content="One-page CV of Habib Benabdeslam, Growth Lead and GTM engineer." />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="apple-touch-icon" href="assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hanken+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#f5f2ea;--ink-2:#ece7d9;--line:rgba(40,70,160,.16);--line-strong:rgba(40,70,160,.34);
+  --blue:#2f56c4;--blue-bright:#1c3da8;--cream:#10172a;--muted:#5b6478;--slate:#33405c;
+  --serif:"Fraunces",Georgia,serif;--sans:"Hanken Grotesk",-apple-system,sans-serif;--mono:"JetBrains Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ink);color:var(--cream);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased;position:relative}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:54px 54px;mask-image:radial-gradient(ellipse 120% 70% at 50% 0%,#000 30%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 120% 70% at 50% 0%,#000 30%,transparent 75%)}
+a{color:inherit;text-decoration:none}
+.topbar{position:relative;z-index:2;max-width:860px;margin:0 auto;padding:22px 28px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.topbar a,.topbar button{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);background:none;border:1px solid var(--line-strong);padding:9px 14px;border-radius:2px;cursor:pointer;transition:.25s}
+.topbar a:hover,.topbar button:hover{color:var(--blue-bright);border-color:var(--blue)}
+.page{position:relative;z-index:2;max-width:860px;margin:18px auto 60px;padding:44px 48px;background:rgba(255,255,255,.55);border:1px solid var(--line);border-radius:4px}
+.mono{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+header h1{font-family:var(--serif);font-weight:400;font-size:2.6rem;letter-spacing:-.02em;line-height:1}
+header h1 .it{font-style:italic;font-weight:300;color:var(--blue)}
+header .role{margin-top:8px;font-size:1.05rem;color:var(--slate)}
+.contact{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:14px;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;color:var(--muted)}
+.contact a{color:var(--blue)}
+.summary{margin-top:20px;color:var(--slate);font-size:.95rem;max-width:72ch}
+h2{font-family:var(--mono);font-weight:500;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin:26px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.job{margin-bottom:16px}
+.job-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.job-head h3{font-family:var(--serif);font-weight:400;font-size:1.18rem}
+.job-head h3 small{font-family:var(--sans);font-size:.9rem;color:var(--muted)}
+.job-head .when{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--muted)}
+.job p.ctx{font-size:.88rem;color:var(--muted);margin-top:2px}
+ul{list-style:none;margin-top:6px;display:flex;flex-direction:column;gap:4px}
+li{padding-left:18px;position:relative;font-size:.9rem;color:var(--slate)}
+li::before{content:"›";position:absolute;left:2px;color:var(--blue);font-family:var(--mono)}
+li b{color:var(--cream);font-weight:600}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 28px}
+.kv{font-size:.88rem;color:var(--slate)}
+.kv b{color:var(--cream);font-weight:600}
+@media(max-width:700px){.page{padding:28px 20px}.grid{grid-template-columns:1fr}header h1{font-size:2.1rem}}
+@media print{
+  @page{size:A4;margin:9mm 11mm}
+  html{font-size:13px}
+  body{background:#fff}
+  body::before,.topbar{display:none}
+  .page{margin:0;padding:0;border:0;background:none;max-width:none}
+  header h1{font-size:1.9rem;margin-top:4px!important}
+  header .role{margin-top:4px;font-size:.95rem}
+  .contact{margin-top:8px}
+  h2{margin:11px 0 6px;padding-bottom:5px}
+  .job{margin-bottom:7px;break-inside:avoid}
+  ul{gap:2px;margin-top:3px}
+  li,.kv{font-size:.8rem;line-height:1.38}
+  .summary{font-size:.84rem;margin-top:9px}
+  .job p.ctx{font-size:.78rem}
+  .job-head h3{font-size:1.05rem}
+  a{color:var(--cream)}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="/">← Portfolio</a>
+  <button onclick="window.print()">Save as PDF</button>
+</div>
+
+<main class="page">
+  <header>
+    <span class="mono">Curriculum vitae</span>
+    <h1 style="margin-top:10px">Habib <span class="it">Benabdeslam</span></h1>
+    <p class="role">Growth Lead and GTM engineer. A growth team of one, with AI agents doing the volume.</p>
+    <div class="contact">
+      <span>Remote · CET</span>
+      <a href="mailto:habib@benabdeslam.com">habib@benabdeslam.com</a>
+      <a href="https://benabdeslam.com">benabdeslam.com</a>
+      <a href="https://www.linkedin.com/in/benabdeslam">linkedin.com/in/benabdeslam</a>
+      <a href="https://github.com/b1b1h-m1k3r">github.com/b1b1h-m1k3r</a>
+    </div>
+    <p class="summary">I run growth end to end at a B2B SaaS: website, SEO, pricing, lifecycle, outbound and sales.
+    I build what I need myself (pages, tools, syncs, automations) and run four AI agents to ship at the pace of a
+    small team. Self-taught, with a background in face-to-face sales and running my own businesses.</p>
+  </header>
+
+  <h2>Experience</h2>
+
+  <div class="job">
+    <div class="job-head"><h3>Growth Lead <small>· Datablist (contract)</small></h3><span class="when">Summer 2024 to now · Remote</span></div>
+    <p class="ctx">B2B data enrichment and lead data SaaS with 30,000+ users. I own everything between the product and the customer.</p>
+    <ul>
+      <li><b>Website:</b> rebuilt the homepage and redesigned the site in 16 languages (43 templates, comparison hub, llms.txt). 4 PRs merged in 14 days, +34k lines.</li>
+      <li><b>SEO:</b> wrote 118 of the site's 167 bylined guides; built a 4-agent content pipeline (idea to draft in about 20 minutes) and a registry that prevents keyword cannibalization. One consolidation more than doubled a page's clicks.</li>
+      <li><b>Product-led acquisition:</b> free tools (domain finder, email finder, company name cleaner) and a page system for 44 enrichments and 13 APIs.</li>
+      <li><b>Retention analysis:</b> joined billing, Mixpanel and Search Console data; showed the loss was at first renewal, not signups, and that the free trial was the strongest converter but hard to find.</li>
+      <li><b>Monetization and lifecycle:</b> ran the pricing redesign (plans, credit add-ons, top-ups), migration and win-back email tracks, and 23 activation emails on 13 cohorts with a 10% holdout.</li>
+      <li><b>Sales:</b> demos for inbound leads; turned a heavy self-serve customer into a 12-month volume contract (usage analysis, two pricing paths, proposal, invoice).</li>
+      <li><b>Outbound:</b> cold email test to Clay users with a 10% reply rate on 400 sends.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="job-head"><h3>Founder <small>· Precision Leads</small></h3><span class="when">2026</span></div>
+    <p class="ctx">Cold email agency booking B2B meetings. Closed to focus on one growth role.</p>
+    <ul>
+      <li>Built the offer, site, Stripe checkout and sending infrastructure (7 domains, warm-up, Smartlead, reply alerts).</li>
+      <li>Scraped and cleaned lists with an AI step that picks the right decision maker per company; launched the first campaigns.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="job-head"><h3>Founder <small>· HR-marketing agency</small></h3><span class="when">2023 to 2025</span></div>
+    <ul><li>Ran client marketing on Notion, Make.com and GPT; where I learned automation and AI by doing.</li></ul>
+  </div>
+
+  <div class="job">
+    <div class="job-head"><h3>Founder <small>· Resale business</small></h3><span class="when">Before 2023</span></div>
+    <ul><li>Built a resale business on face-to-face sales to €84k a month at its peak (about $100k), then lost it.</li></ul>
+  </div>
+
+  <h2>Skills and tools</h2>
+  <div class="grid">
+    <p class="kv"><b>Growth:</b> SEO and AI search, pricing, lifecycle email, cold outbound, product-led tools, demos</p>
+    <p class="kv"><b>Data:</b> Mixpanel, Google Search Console, DataForSEO, Chargebee, cohort analysis</p>
+    <p class="kv"><b>Build:</b> HTML/CSS/JS, GitHub, Cloudflare Pages and Workers, Make.com, Notion</p>
+    <p class="kv"><b>AI:</b> Claude Code, Codex, Gemini, multi-agent pipelines, prompt and skill design</p>
+    <p class="kv"><b>Outbound:</b> Smartlead, Brevo, Sales Navigator, list building and enrichment</p>
+    <p class="kv"><b>Languages:</b> fluent in Arabic, English and German; basic French and Spanish</p>
+  </div>
+
+  <h2>Proof</h2>
+  <ul>
+    <li>Portfolio and case studies: <a href="https://benabdeslam.com">benabdeslam.com</a></li>
+    <li>My Datablist guides: <a href="https://www.datablist.com/author/habib-benabdeslam">datablist.com/author/habib-benabdeslam</a></li>
+    <li>Open source: <a href="https://github.com/b1b1h-m1k3r/multi-agent-workspace">multi-agent-workspace</a>, <a href="https://github.com/b1b1h-m1k3r/claude-work-mac">claude-work-mac</a></li>
+  </ul>
+</main>
+</body>
+</html>
